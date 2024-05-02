@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Ticket Tracker Application</title>
+<link crossorigin="anonymous"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	rel="stylesheet">
+
+<style>
+    /* Adjust the height of the CKEditor content area */
+    .ck.ck-editor__editable {
+        height: 200px; /* Adjust the height as needed */
+    }
+    
+    /* Increase the width of text areas inside the card */
+    .card .form-control {
+        width: 100%; /* Set the desired width */
+    }
+
+    /* Change the color of the h1 element */
+    .card h1.text-center {
+        background-color: #f5f5f5; /* Set the desired background color */
+        color: black; /* Optionally set the text color */
+        
+    }
+</style>
+
+
+<script
+	src="https://cdn.ckeditor.com/ckeditor5/35.0.0/classic/ckeditor.js"></script>
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("DOM Content Loaded");
+        var editorElement = document.querySelector('#editor');
+        console.log("Editor Element:", editorElement);
+
+        ClassicEditor
+            .create(editorElement, {
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'underline',
+                        'strikethrough',
+                        'subscript',
+                        'superscript',
+                        '|',
+                        'fontColor',
+                        'fontBackgroundColor',
+                        '|',
+                        'bulletedList',
+                        'numberedList',
+                        '|',
+                        'alignment',
+                        '|',
+                        'outdent',
+                        'indent',
+                        '|',
+                        'link',
+                        'insertTable',
+                        '|',
+                        'imageInsert',
+                        'blockQuote',
+                        '|',
+                        'undo',
+                        'redo',
+                        '|',
+                        'maximize',
+                        'minimize'
+                    ]
+                },
+                language: 'en'
+            })
+            .then(editor => {
+                console.log("CKEditor initialized successfully");
+
+                // Get the CKEditor editable area
+                var editable = editor.editing.view.document.getRoot();
+
+                // Make CKEditor content area resizable
+                $(editable.$).resizable({
+                    handles: 's', // Enable resizing only from the bottom edge
+                    minHeight: 500, // Set minimum height
+                    resize: function() {
+                        editor.editing.view.resize();
+                    }
+                });
+            })
+            .catch(error => {
+                console.error("CKEditor initialization error:", error);
+            });
+    });
+</script>
+
+</head>
+
+<body>
+	<div th:insert="navbar :: navbar"></div>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div
+				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center">New Ticket</h1>
+				<div class="card-body">
+					<form method="POST" th:action="@{/ticket/save}"
+						th:object="${ticket}">
+
+						<input th:field="*{id}" type="hidden" /> <input
+							th:field="*{createdOn}" type="hidden" />
+
+						<div class="form-group">
+							<label>Title </label> <input class="form-control"
+								name="ticketTitle" placeholder="Enter ticket title"
+								th:field="*{ticketTitle}" type="text" />
+						</div>
+
+						<div class="form-group">
+							<label>Short Description </label> <input class="form-control"
+								name="shortDescription" placeholder="Enter short description"
+								th:field="*{shortDescription}" type="text" />
+						</div>
+
+						<div class="form-group">
+							<label for="editor">Content</label>
+							<!-- Replace the textarea with CKEditor -->
+							<textarea id="editor" name="content" class="form-control"
+								placeholder="Enter content" th:field="*{content}"
+								contenteditable></textarea>
+						</div>
+
+						<div class="box-footer">
+							<button class="btn btn-primary" type="submit">Submit</button>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

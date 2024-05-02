@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Ticket Tracking Application</title>
+<link crossorigin="anonymous"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	rel="stylesheet">
+<style>
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+th, td {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+</style>
+</head>
+
+<body>
+	<div th:insert="navbar :: navbar"></div>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div
+				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center">View Ticket</h1>
+				<div class="card-body">
+					<form>
+						<table>
+							<thead>
+								<tr>
+									<th>Key</th>
+									<th>Value</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Id:</td>
+									<td th:text="${ticket.id}"></td>
+								</tr>
+								<tr>
+									<td>Title:</td>
+									<td th:text="${ticket.ticketTitle}"></td>
+								</tr>
+								<tr>
+									<td>ShortDescription:</td>
+									<td th:text="${ticket.shortDescription}"></td>
+								</tr>
+								<tr>
+									<td>Content:</td>
+									<td th:text="${ticket.content}"></td>
+								</tr>
+								<tr>
+									<td>Created On:</td>
+									<td th:text="${ticket.createdOn}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

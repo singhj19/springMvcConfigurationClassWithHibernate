@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<center>
+<h2> Hi <span th:text="${message}"></span></h2>
+<a th:href="@{/ticket/list}">View Ticket Details</a>
+</center>
+</body>
+</html>
